@@ -1,8 +1,7 @@
 import pygame
 from utils import is_circle_colliding, is_circle_inside_circle
 
-FOOD_SIZE = 2
-VELOCITY = 50
+VELOCITY = 10
 
 class Display:
     def __init__(self, window_size):
@@ -36,7 +35,7 @@ class Display:
         
     def draw_food(self, food):
         for f in food:
-            pygame.draw.circle(self._screen, pygame.Color("white"), f, FOOD_SIZE)
+            pygame.draw.circle(self._screen, pygame.Color("white"), (f.x, f.y), f.size)
             
     def draw_organisms(self, organisms):
         for organism in organisms:
@@ -48,9 +47,9 @@ class Display:
     def verify_food_collision(self, food, organisms):
         for organism in organisms:
             for f in food:
-                if is_circle_colliding((organism.x, organism.y, organism.size), (f[0], f[1], FOOD_SIZE)):
+                if is_circle_colliding((organism.x, organism.y, organism.size), (f.x, f.y, f.size)):
                     food.remove(f)
-                    new_size = organism.size + FOOD_SIZE
+                    new_size = organism.size + f.size
                     organism.size = new_size
                     
     def verify_organisms_collision(self, ecosystem):

@@ -9,7 +9,7 @@ ORGANISM_AMOUNT = 100
 WINDOW_SIZE = 600
 VELOCITY = 50
 
-ecosystem = Ecosystem()
+ecosystem = Ecosystem(WINDOW_SIZE, ORGANISM_AMOUNT)
 generate_food(ecosystem, FOOD_AMOUNT, WINDOW_SIZE, WINDOW_SIZE)
 
 colors = ["red", "blue", "yellow", "purple", "orange", "green", "pink", "brown", "gray", "cyan"]

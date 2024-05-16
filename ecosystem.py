@@ -1,19 +1,19 @@
+from data_structure.quadtree import Quadtree
+from data_structure.boundary import Boundary
+
 class Ecosystem:
-    def __init__(self):
-        self.organisms = []
+    def __init__(self, window_size, organism_capacity):
+        self.organisms = Quadtree(Boundary(0, 0, window_size, window_size), organism_capacity)
         self.food = []
     
     def add_organism(self, organism):
-        self.organisms.append(organism)
+        self.organisms.insert(organism)
         
     def remove_organism(self, organism):
         self.organisms.remove(organism)
-        
-    def get_organism(self, index):
-        return self.organisms[index]
     
     def get_organisms(self):
-        return self.organisms
+        return self.organisms.query_all_organisms()
     
     def get_food(self):
         return self.food

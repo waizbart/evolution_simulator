@@ -1,5 +1,6 @@
 import math
-from random import randint
+from random import randint, choice
+from food import Food
 
 def is_circle_colliding(circle1, circle2):
     x1, y1, r1 = circle1
@@ -21,5 +22,8 @@ def generate_food(ecosystem, amount, width, height):
     for _ in range(amount):
         x = randint(0, width)
         y = randint(0, height)
+        size = choice([1, 1, 1, 1, 2, 2, 3])
         
-        ecosystem.add_food((x, y))
+        food = Food(size, x, y)
+
+        ecosystem.add_food(food)
