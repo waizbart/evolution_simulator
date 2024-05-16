@@ -2,8 +2,8 @@ from data_structure.quadtree import Quadtree
 from data_structure.boundary import Boundary
 
 class Ecosystem:
-    def __init__(self, window_size, organism_capacity):
-        self.organisms = Quadtree(Boundary(0, 0, window_size, window_size), organism_capacity)
+    def __init__(self, window_size):
+        self.organisms = Quadtree(Boundary(0, 0, window_size, window_size), 4)
         self.food = []
     
     def add_organism(self, organism):

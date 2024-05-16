@@ -59,20 +59,27 @@ class Quadtree:
                 continue
     
     def query_range(self, range_boundary, found=[]):
+        if found is None:
+            found = []  # Create a new list if not provided
+
+        # Early exit if the query area doesn't intersect with the quadtree's boundary
         if not self.boundary.intersects(range_boundary):
-            return found  # Nenhum organismo dentro da área de consulta
-        
-        for organism in self.organisms:
-            if range_boundary.contains_point(organism.x, organism.y):
-                found.append(organism)
-        
+            return found
+
+        # Recursive search if the quadtree is divided
         if self.divided:
-            self.northeast.query_range(range_boundary, found)
-            self.northwest.query_range(range_boundary, found)
-            self.southeast.query_range(range_boundary, found)
-            self.southwest.query_range(range_boundary, found)
-        
+            found = self.northeast.query_range(range_boundary, found.copy())
+            found = self.northwest.query_range(range_boundary, found.copy())
+            found = self.southeast.query_range(range_boundary, found.copy())
+            found = self.southwest.query_range(range_boundary, found.copy())
+        else:
+            # Check for organisms within the quadtree's leaf node
+            for organism in self.organisms:
+                if range_boundary.contains_point(organism.x, organism.y):
+                    found.append(organism)
+
         return found
+        
     
     def query_all_organisms(self):
         # Método recursivo para coletar todos os organismos na quadtree

@@ -32,9 +32,9 @@ class Organism:
 
         return nearby_organisms
 
-    def distance_to(self, other_organism):
+    def distance_to(self, other_obj):
         # Calcular a distância euclidiana entre este organismo e outro organismo
-        return math.sqrt((self.x - other_organism.x)**2 + (self.y - other_organism.y)**2)
+        return math.sqrt((self.x - other_obj.x)**2 + (self.y - other_obj.y)**2)
     
     def get_nearby_food(self, ecosystem, distance):
         nearby_food = []
