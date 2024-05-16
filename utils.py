@@ -16,14 +16,3 @@ def is_circle_inside_circle(circle1, circle2):
     distance = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
     
     return distance + r1 <= r2 or distance + r2 <= r1
-
-def generate_food(amount, width, height):
-    food = []
-    
-    for i in range(amount):
-        x = randint(0, width)
-        y = randint(0, height)
-        
-        food.append((x, y))
-        
-    return food
