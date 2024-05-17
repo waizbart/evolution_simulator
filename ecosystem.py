@@ -20,3 +20,10 @@ class Ecosystem:
     
     def add_food(self, food):
         self.food.append(food)
+        
+    def reproduce_all(self):
+        print("Reproducing all organisms")
+        for organism in self.get_organisms():
+            if organism.size >= 2:
+                new_organism = organism.reproduce()
+                self.add_organism(new_organism)

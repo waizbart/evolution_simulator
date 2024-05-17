@@ -12,7 +12,7 @@ class Display:
         self._clock = pygame.time.Clock().tick(VELOCITY)
         self._window_size = window_size
 
-    def update(self, ecosystem):
+    def update(self, ecosystem, initial_organisms_total):
         organisms = ecosystem.get_organisms()
         food = ecosystem.get_food()
         
@@ -30,9 +30,21 @@ class Display:
         pygame.display.flip()
         pygame.time.Clock().tick(VELOCITY)
         
-        if len(ecosystem.get_organisms()) == 1:
-            self.is_running = False
+        current_organisms_total = len(ecosystem.get_organisms())
         
+        if current_organisms_total == 1:
+            self.is_running = False
+        elif current_organisms_total < initial_organisms_total // 2:
+            ecosystem.reproduce_all()
+            
+        organisms_colors_in_ecosystem = set([organism.color for organism in ecosystem.get_organisms()])
+        
+        if len(organisms_colors_in_ecosystem) == 1:
+            self.is_running = False
+            organism = ecosystem.get_organisms()[0]
+            print("All organisms are the same color")
+            print(organism)
+            
     def draw_food(self, food):
         for f in food:
             pygame.draw.circle(self._screen, pygame.Color("white"), (f.x, f.y), f.size)
@@ -56,7 +68,7 @@ class Display:
     def verify_organisms_collision(self, ecosystem):
         for organism in ecosystem.get_organisms():
             for other_organism in ecosystem.get_organisms():
-                if organism != other_organism:
+                if organism != other_organism and organism.color != other_organism.color:
                     if is_circle_inside_circle((organism.x, organism.y, organism.size), (other_organism.x, other_organism.y, other_organism.size)):
                         if organism.size > other_organism.size:
                             ecosystem.remove_organism(other_organism)
