@@ -6,7 +6,7 @@ from display import Display
 
 FOOD_AMOUNT = 50
 ORGANISM_AMOUNT = 100
-WINDOW_SIZE = 600
+WINDOW_SIZE = 800
 VELOCITY = 50
 
 ecosystem = Ecosystem(WINDOW_SIZE)
@@ -25,9 +25,7 @@ for i in range(ORGANISM_AMOUNT):
 
     ecosystem.add_organism(organism)
 
-running = True
-
 display = Display(WINDOW_SIZE)
 
-while running:
+while display.is_running:
     display.update(ecosystem)

@@ -2,24 +2,23 @@ from .boundary import Boundary
 
 class Quadtree:
     def __init__(self, boundary, capacity=4):
-        self.boundary = boundary  # Limites do quadtree (área retangular)
-        self.capacity = capacity  # Capacidade máxima de objetos por nó
-        self.organisms = []       # Lista de organismos contidos neste nó
-        self.divided = False      # Indica se o nó foi dividido em quadrantes
+        self.boundary = boundary  
+        self.capacity = capacity  
+        self.organisms = []       
+        self.divided = False      
     
     def insert(self, organism):
         if not self.boundary.contains_point(organism.x, organism.y):
-            return False  # O organismo está fora dos limites desta quadtree
+            return False  
         
         if len(self.organisms) < self.capacity:
             self.organisms.append(organism)
             return True
         else:
             if not self.divided:
-                self.divide()  # Dividir este nó em quadrantes
+                self.divide()  
                 self.divided = True
             
-            # Inserir o organismo em um dos quadrantes
             if self.northeast.insert(organism):
                 return True
             elif self.northwest.insert(organism):
@@ -47,7 +46,7 @@ class Quadtree:
         self.southeast = Quadtree(se_boundary, self.capacity)
         self.southwest = Quadtree(sw_boundary, self.capacity)
         
-        # Mover os organismos atuais para os quadrantes apropriados
+        
         for organism in self.organisms:
             if self.northeast.insert(organism):
                 continue
@@ -60,20 +59,18 @@ class Quadtree:
     
     def query_range(self, range_boundary, found=[]):
         if found is None:
-            found = []  # Create a new list if not provided
+            found = []  
 
-        # Early exit if the query area doesn't intersect with the quadtree's boundary
         if not self.boundary.intersects(range_boundary):
             return found
 
-        # Recursive search if the quadtree is divided
         if self.divided:
             found = self.northeast.query_range(range_boundary, found.copy())
             found = self.northwest.query_range(range_boundary, found.copy())
             found = self.southeast.query_range(range_boundary, found.copy())
             found = self.southwest.query_range(range_boundary, found.copy())
         else:
-            # Check for organisms within the quadtree's leaf node
+            
             for organism in self.organisms:
                 if range_boundary.contains_point(organism.x, organism.y):
                     found.append(organism)
@@ -82,7 +79,6 @@ class Quadtree:
         
     
     def query_all_organisms(self):
-        # Método recursivo para coletar todos os organismos na quadtree
         all_organisms = []
         
         if self.divided:

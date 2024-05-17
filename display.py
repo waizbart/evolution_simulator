@@ -22,17 +22,7 @@ class Display:
     
         self._screen.fill((0, 0, 0))
         
-        # test 
-        selected_organism = organisms[len(organisms) // 2]
-        nearby_organisms = selected_organism.get_nearby_organisms(ecosystem.organisms, 100)
-        nearby_food = selected_organism.get_nearby_food(ecosystem, 100)
-        # draw rectangle around selected organism
-        pygame.draw.rect(self._screen, pygame.Color("red"), (selected_organism.x - 100, selected_organism.y - 100, 200, 200), 2)
-        print("Nearby organisms: ", len(nearby_organisms))
-        print("Nearby food: ", len(nearby_food))
-        print("Total organisms: ", len(organisms))
-        
-        self.draw_organisms(organisms)
+        self.draw_organisms(ecosystem)
         self.draw_food(food)
         self.verify_food_collision(food, organisms)
         self.verify_organisms_collision(ecosystem)
@@ -47,9 +37,10 @@ class Display:
         for f in food:
             pygame.draw.circle(self._screen, pygame.Color("white"), (f.x, f.y), f.size)
             
-    def draw_organisms(self, organisms):
+    def draw_organisms(self, ecosystem):
+        organisms = ecosystem.get_organisms()
         for organism in organisms:
-            organism.move(self._window_size, self._window_size)
+            organism.move(ecosystem, self._window_size, self._window_size)
             pygame.draw.circle(self._screen, pygame.Color(organism.color), (organism.x, organism.y), organism.size)
             if organism.size > 1:
                 pygame.draw.circle(self._screen, pygame.Color("white"), (organism.x, organism.y), organism.size, 1)
