@@ -35,7 +35,6 @@ class Organism:
         
     def get_angle(self, ecosystem):
         vision = self.vision * (self.size ** 0.5)
-        print(vision)
         
         nearby_food = self.get_nearby_food(ecosystem, vision)
         nearby_organisms = self.get_nearby_organisms(ecosystem.organisms, vision)
