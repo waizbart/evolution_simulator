@@ -1,7 +1,7 @@
 import pygame
-from utils import is_circle_colliding, is_circle_inside_circle
+from .utils import is_circle_colliding, is_circle_inside_circle
 
-VELOCITY = 10
+FPS = 60
 
 class Display:
     def __init__(self, window_size):
@@ -9,7 +9,6 @@ class Display:
         pygame.display.set_caption("Ecosystem")
         self._screen = pygame.display.set_mode((window_size, window_size))
         self._running = True
-        self._clock = pygame.time.Clock().tick(VELOCITY)
         self._window_size = window_size
 
     def update(self, ecosystem, initial_organisms_total):
@@ -28,7 +27,7 @@ class Display:
         self.verify_organisms_collision(ecosystem)
         
         pygame.display.flip()
-        pygame.time.Clock().tick(VELOCITY)
+        pygame.time.Clock().tick(FPS)
         
         current_organisms_total = len(ecosystem.get_organisms())
         
@@ -43,7 +42,7 @@ class Display:
             self.is_running = False
             organism = ecosystem.get_organisms()[0]
             print("All organisms are the same color")
-            print(organism)
+            print("Winner: ", organism)
             
     def draw_food(self, food):
         for f in food:

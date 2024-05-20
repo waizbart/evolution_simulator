@@ -1,12 +1,11 @@
-from organism import Organism
-from random import randint, choice
-from ecosystem import Ecosystem
-from utils import generate_food
-from display import Display
+from random import randint
+from src.ecosystem import Ecosystem
+from src.organism import Organism
+from src.utils import generate_food
+from src.display import Display
 
 FOOD_AMOUNT = 50
 WINDOW_SIZE = 800
-VELOCITY = 50
 
 ecosystem = Ecosystem(WINDOW_SIZE)
 generate_food(ecosystem, FOOD_AMOUNT, WINDOW_SIZE, WINDOW_SIZE)

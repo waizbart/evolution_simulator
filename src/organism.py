@@ -1,6 +1,8 @@
-from data_structure.boundary import Boundary
+from .data_structure.boundary import Boundary
 from random import randint, random, uniform
 import math    
+
+MAX_SPEED = 2
 class Organism:
     def __init__(
         self, 
@@ -14,14 +16,14 @@ class Organism:
     ):
         self.color = color
         self.size = size if size is not None else 1
-        self.speed = speed if speed is not None else randint(1, 10)
+        self.speed = speed if speed is not None else random() * MAX_SPEED
         self.x = None
         self.y = None
         self.vision = 100
         self.hunger = hunger if hunger is not None else random()
         self.fear = fear if fear is not None else random()
         self.aggression = aggression if aggression is not None else random()
-        self.randomness = randomness if randomness is not None else random()
+        self.randomness = randomness if randomness is not None else random() 
 
     def move(self, ecosystem, max_x, max_y):
         angle = self.get_angle(ecosystem)
@@ -106,7 +108,7 @@ class Organism:
         new_aggression = self.aggression * (1 + uniform(-mutation_rate, mutation_rate))
         new_randomness = self.randomness * (1 + uniform(-mutation_rate, mutation_rate))
         
-        offspring = Organism(
+        new_organism = Organism(
             color=new_color,
             size=new_size,
             speed=new_speed,
@@ -116,10 +118,10 @@ class Organism:
             randomness=new_randomness,
         )
         
-        offspring.x = self.x
-        offspring.y = self.y
+        new_organism.x = self.x
+        new_organism.y = self.y
         
-        return offspring
+        return new_organism
     
     def __str__(self):
         return f"Organism(color={self.color}, size={self.size}, speed={self.speed}, hunger={self.hunger}, fear={self.fear}, aggression={self.aggression}, randomness={self.randomness})"

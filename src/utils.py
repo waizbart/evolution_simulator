@@ -1,6 +1,6 @@
 import math
 from random import randint, choice
-from food import Food
+from .food import Food
 
 def is_circle_colliding(circle1, circle2):
     x1, y1, r1 = circle1

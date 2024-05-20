@@ -1,4 +1,5 @@
 from .boundary import Boundary
+from .sort import insertion_sort
 
 class Quadtree:
     def __init__(self, boundary, capacity=4):
@@ -13,6 +14,7 @@ class Quadtree:
         
         if len(self.organisms) < self.capacity:
             self.organisms.append(organism)
+            insertion_sort(self.organisms, key=lambda x: x.size)
             return True
         else:
             if not self.divided:

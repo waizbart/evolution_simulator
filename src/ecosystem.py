@@ -1,5 +1,5 @@
-from data_structure.quadtree import Quadtree
-from data_structure.boundary import Boundary
+from .data_structure.quadtree import Quadtree
+from .data_structure.boundary import Boundary
 
 class Ecosystem:
     def __init__(self, window_size):
