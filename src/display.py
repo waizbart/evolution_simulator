@@ -11,9 +11,10 @@ class Display:
         self._running = True
         self._window_size = window_size
 
-    def update(self, ecosystem, initial_organisms_total):
+    def update(self, ecosystem):
         organisms = ecosystem.get_organisms()
         food = ecosystem.get_food()
+        initial_organisms_total = ecosystem.get_total_initial_organisms()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -25,6 +26,7 @@ class Display:
         self.draw_food(food)
         self.verify_food_collision(food, organisms)
         self.verify_organisms_collision(ecosystem)
+        self.draw_generation(ecosystem.generations)
         
         pygame.display.flip()
         pygame.time.Clock().tick(FPS)
@@ -38,11 +40,14 @@ class Display:
             
         organisms_colors_in_ecosystem = set([organism.color for organism in ecosystem.get_organisms()])
         
+        # Se só existe uma cor de organismo no ecossistema então cria uma nova geração utilizando o organismo vencedor como base
         if len(organisms_colors_in_ecosystem) == 1:
-            self.is_running = False
             organism = ecosystem.get_organisms()[0]
             print("All organisms are the same color")
             print("Winner: ", organism)
+            print("New generation: ", ecosystem.generations)
+            ecosystem.new_generation(organism)
+            
             
     def draw_food(self, food):
         for f in food:
@@ -75,6 +80,11 @@ class Display:
                         else:
                             ecosystem.remove_organism(organism)
                             other_organism.size += organism.size
+                            
+    def draw_generation(self, generation):
+        font = pygame.font.Font(None, 36)
+        text = font.render(f"Generation: {generation}", True, pygame.Color("white"))
+        self._screen.blit(text, (10, 10))
     
     def is_running(self):
         return self._running

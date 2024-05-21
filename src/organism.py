@@ -34,40 +34,31 @@ class Organism:
         self.y = max(self.size, min(new_y, max_y - self.size))
         
     def get_angle(self, ecosystem):
-        vision = self.vision * (self.size ** 0.5)
-        
+        vision = self.vision * self.size
         nearby_food = self.get_nearby_food(ecosystem, vision)
         nearby_organisms = self.get_nearby_organisms(ecosystem.organisms, vision)
-        
         best_goal = None
         best_score = float('-inf')
         
         for food in nearby_food:
             distance = self.distance_to(food)
-            
             if distance == 0:
                 distance = 1e-9
-            
             score = self.hunger * (1 / distance)
             if score > best_score:
                 best_score = score
                 best_goal = food
-        
+                
         for organism in nearby_organisms:
-            
             if organism == self or organism.color == self.color:
                 continue
-            
             distance = self.distance_to(organism)
-            
             if distance == 0:
                 distance = 1e-9
-            
             if self.size > organism.size:
                 score = self.aggression * (1 / distance)
             else:
                 score = -self.fear * (1 / distance)
-                
             if score > best_score:
                 best_score = score
                 best_goal = organism
