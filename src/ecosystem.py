@@ -4,6 +4,7 @@ from .organism import Organism
 from .food import Food
 from random import randint, choice
 
+ORGANISM_SIZE = 100
 FOOD_AMOUNT = 50
 class Ecosystem:
     def __init__(self, window_size, organism_colors):
@@ -25,7 +26,9 @@ class Ecosystem:
         return self.organisms.query_all_organisms()
     
     def generate_organisms(self, default_organism=None):
-        for color in self.organism_colors:
+        for _ in range(ORGANISM_SIZE):
+            color = choice(self.organism_colors)
+            
             if default_organism:
                 organism = default_organism.reproduce()
                 organism.color = color
@@ -57,7 +60,7 @@ class Ecosystem:
     def reproduce_all(self):
         print("Reproducing all organisms")
         for organism in self.get_organisms():
-            if organism.size >= 2:
+            if organism.size >= 5:
                 new_organism = organism.reproduce()
                 self.add_organism(new_organism)
                 

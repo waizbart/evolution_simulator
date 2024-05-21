@@ -32,10 +32,8 @@ class Display:
         pygame.time.Clock().tick(FPS)
         
         current_organisms_total = len(ecosystem.get_organisms())
-        
-        if current_organisms_total == 1:
-            self.is_running = False
-        elif current_organisms_total < initial_organisms_total // 2:
+      
+        if current_organisms_total < initial_organisms_total // 2:
             ecosystem.reproduce_all()
             
         organisms_colors_in_ecosystem = set([organism.color for organism in ecosystem.get_organisms()])

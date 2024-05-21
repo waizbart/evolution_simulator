@@ -2,7 +2,7 @@ from .data_structure.boundary import Boundary
 from random import randint, random, uniform
 import math    
 
-MAX_SPEED = 2
+MAX_SPEED = 5
 class Organism:
     def __init__(
         self, 
