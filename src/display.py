@@ -33,8 +33,8 @@ class Display:
         
         current_organisms_total = len(ecosystem.get_organisms())
       
-        if current_organisms_total < initial_organisms_total // 2:
-            ecosystem.reproduce_all()
+        # if current_organisms_total < initial_organisms_total // 2:
+        #     ecosystem.reproduce_all()
             
         organisms_colors_in_ecosystem = set([organism.color for organism in ecosystem.get_organisms()])
         
