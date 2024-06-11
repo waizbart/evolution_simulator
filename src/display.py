@@ -1,7 +1,7 @@
 import pygame
 from .utils import is_circle_colliding, is_circle_inside_circle
 
-FPS = 60
+FPS = 20
 
 class Display:
     def __init__(self, window_size):
@@ -14,7 +14,6 @@ class Display:
     def update(self, ecosystem):
         organisms = ecosystem.get_organisms()
         food = ecosystem.get_food()
-        initial_organisms_total = ecosystem.get_total_initial_organisms()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,11 +29,6 @@ class Display:
         
         pygame.display.flip()
         pygame.time.Clock().tick(FPS)
-        
-        current_organisms_total = len(ecosystem.get_organisms())
-      
-        # if current_organisms_total < initial_organisms_total // 2:
-        #     ecosystem.reproduce_all()
             
         organisms_colors_in_ecosystem = set([organism.color for organism in ecosystem.get_organisms()])
         
